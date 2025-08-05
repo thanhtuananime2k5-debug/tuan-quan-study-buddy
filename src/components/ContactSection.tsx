@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,17 +11,13 @@ import { Facebook, Mail, Youtube, CreditCard, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import qrPayment from "@/assets/qr-payment.jpg";
 
-const services = [
-  "Rush Coursera",
-  "Tài liệu & Source Code",
-  "Khóa học trực tuyến cấp tốc",
-  "Support LUK (Media) - Edit video",
-  "Support LUK (Media) - Script kịch bản", 
-  "Support LUK (Media) - Combo Full",
-  "Support LUK (Media) - Làm bảng điểm",
-  "Project, Lab, Bài tập lớn",
-  "Tư vấn khác"
-];
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  in_stock: boolean;
+}
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -30,9 +27,29 @@ export const ContactSection = () => {
     message: ""
   });
   const [showPayment, setShowPayment] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('in_stock', true)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.service) {
       toast({
@@ -43,11 +60,32 @@ export const ContactSection = () => {
       return;
     }
     
-    setShowPayment(true);
-    toast({
-      title: "Gửi yêu cầu thành công!",
-      description: "Chúng mình sẽ liên hệ với bạn trong vòng 24h. Vui lòng thanh toán theo thông tin bên dưới.",
-    });
+    try {
+      // Save contact request to database
+      const { error } = await supabase
+        .from('contact_requests')
+        .insert({
+          full_name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          message: formData.message
+        });
+
+      if (error) throw error;
+
+      setShowPayment(true);
+      toast({
+        title: "Gửi yêu cầu thành công!",
+        description: "Chúng mình sẽ liên hệ với bạn trong vòng 24h. Vui lòng thanh toán theo thông tin bên dưới.",
+      });
+    } catch (error) {
+      console.error('Error saving contact request:', error);
+      toast({
+        title: "Lỗi",
+        description: "Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -111,11 +149,12 @@ export const ContactSection = () => {
                       <SelectValue placeholder="Chọn dịch vụ bạn cần hỗ trợ" />
                     </SelectTrigger>
                     <SelectContent>
-                      {services.map((service) => (
-                        <SelectItem key={service} value={service}>
-                          {service}
+                      {products.map((product) => (
+                        <SelectItem key={product.id} value={product.name}>
+                          {product.name}
                         </SelectItem>
                       ))}
+                      <SelectItem value="Tư vấn khác">Tư vấn khác</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

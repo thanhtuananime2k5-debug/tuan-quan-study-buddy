@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,66 +12,106 @@ import {
   Edit,
   BarChart
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
-const services = [
-  {
-    icon: GraduationCap,
-    title: "Rush Coursera",
-    description: "Hỗ trợ chọn khóa học, theo dõi tiến độ, làm bài",
-    price: "120k - 150k",
-    cta: "Tư vấn Coursera miễn phí",
-    bgColor: "bg-blue-50",
-    iconColor: "text-blue-600"
-  },
-  {
-    icon: FileText,
-    title: "Tài liệu & Source Code",
-    description: "Đề thi, tài liệu PDF, code C, Java, Python, DB,...",
-    price: "50k - 70k",
-    cta: "Xem tài liệu ngay",
-    bgColor: "bg-green-50",
-    iconColor: "text-green-600"
-  },
-  {
-    icon: Play,
-    title: "Khóa học trực tuyến cấp tốc",
-    description: "Rút gọn, dễ hiểu, dễ thi",
-    price: "100k - 300k",
-    cta: "Đăng ký khóa học",
-    bgColor: "bg-purple-50",
-    iconColor: "text-purple-600"
-  },
-  {
-    icon: Video,
-    title: "Support LUK (Media)",
-    description: "Dịch vụ media chuyên nghiệp cho sinh viên",
-    price: "Xem chi tiết",
-    cta: "Liên hệ team Media",
-    bgColor: "bg-orange-50",
-    iconColor: "text-orange-600",
-    subServices: [
-      { name: "Edit video", price: "70k" },
-      { name: "Script kịch bản", price: "40k" },
-      { name: "Combo Full", price: "90k" },
-      { name: "Làm bảng điểm", price: "10k" }
-    ]
-  },
-  {
-    icon: Code,
-    title: "Project, Lab, Bài tập lớn",
-    description: "Java, Python, Web, DB,...",
-    price: "100k - 500k",
-    cta: "Yêu cầu hỗ trợ",
-    bgColor: "bg-indigo-50",
-    iconColor: "text-indigo-600"
-  }
-];
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  in_stock: boolean;
+}
 
 export const ServicesSection = () => {
-  const handleServiceClick = (serviceName: string) => {
-    // Scroll to contact form
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('in_stock', true)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      toast.error('Không thể tải dữ liệu sản phẩm');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+    }).format(price);
+  };
+
+  const getServiceIcon = (name: string) => {
+    if (name.toLowerCase().includes('coursera')) return GraduationCap;
+    if (name.toLowerCase().includes('tài liệu') || name.toLowerCase().includes('source')) return FileText;
+    if (name.toLowerCase().includes('khóa học')) return Play;
+    if (name.toLowerCase().includes('project') || name.toLowerCase().includes('java') || name.toLowerCase().includes('python') || name.toLowerCase().includes('web')) return Code;
+    if (name.toLowerCase().includes('edit') || name.toLowerCase().includes('script') || name.toLowerCase().includes('media')) return Video;
+    if (name.toLowerCase().includes('bảng điểm')) return BarChart;
+    return BookOpen;
+  };
+
+  const handleServiceClick = (product: Product) => {
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Pre-fill the service in contact form
+      setTimeout(() => {
+        const serviceSelect = document.querySelector('select[name="service"]') as HTMLSelectElement;
+        if (serviceSelect) {
+          serviceSelect.value = product.name;
+          serviceSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }, 500);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section id="services" className="py-20 px-4 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Dịch vụ hỗ trợ học tập
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="animate-pulse">
+                <CardHeader>
+                  <div className="h-16 w-16 bg-muted rounded-full mx-auto mb-4" />
+                  <div className="h-4 bg-muted rounded w-3/4 mx-auto mb-2" />
+                  <div className="h-3 bg-muted rounded w-full mb-2" />
+                  <div className="h-6 bg-muted rounded w-1/2 mx-auto" />
+                </CardHeader>
+                <CardContent>
+                  <div className="h-10 bg-muted rounded" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="services" className="py-20 px-4 bg-background">
@@ -85,47 +126,38 @@ export const ServicesSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="group hover:shadow-large transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-soft"
-            >
-              <CardHeader className="text-center">
-                <div className={`w-16 h-16 mx-auto rounded-full ${service.bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <service.icon className={`w-8 h-8 ${service.iconColor}`} />
-                </div>
-                <CardTitle className="text-xl font-bold">{service.title}</CardTitle>
-                <CardDescription className="text-sm">
-                  {service.description}
-                </CardDescription>
-                <Badge variant="secondary" className="text-lg font-semibold py-1 px-3">
-                  {service.price}
-                </Badge>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                {service.subServices && (
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-sm text-muted-foreground">Chi tiết dịch vụ:</h4>
-                    {service.subServices.map((sub, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm">
-                        <span>{sub.name}</span>
-                        <Badge variant="outline">{sub.price}</Badge>
-                      </div>
-                    ))}
+          {products.map((product) => {
+            const IconComponent = getServiceIcon(product.name);
+            return (
+              <Card 
+                key={product.id} 
+                className="group hover:shadow-large transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-soft"
+              >
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <IconComponent className="w-8 h-8 text-primary" />
                   </div>
-                )}
+                  <CardTitle className="text-xl font-bold">{product.name}</CardTitle>
+                  <CardDescription className="text-sm">
+                    {product.description}
+                  </CardDescription>
+                  <Badge variant="secondary" className="text-lg font-semibold py-1 px-3">
+                    {formatPrice(product.price)}
+                  </Badge>
+                </CardHeader>
                 
-                <Button 
-                  variant="default" 
-                  className="w-full"
-                  onClick={() => handleServiceClick(service.title)}
-                >
-                  {service.cta}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                <CardContent className="space-y-4">
+                  <Button 
+                    variant="default" 
+                    className="w-full"
+                    onClick={() => handleServiceClick(product)}
+                  >
+                    Đặt dịch vụ ngay
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
         
         <div className="text-center mt-12">
