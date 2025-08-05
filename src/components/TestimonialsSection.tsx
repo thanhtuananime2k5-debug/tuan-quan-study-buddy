@@ -50,6 +50,54 @@ const testimonials = [
     content: "Từ không biết gì về HTML/CSS đến làm được website hoàn chỉnh. Team support rất nhiệt tình và kiên nhẫn!",
     rating: 5,
     semester: "Học kỳ 2"
+  },
+  {
+    name: "Bùi Thị Mai",
+    avatar: "BM",
+    subject: "PRF192 - Programming Fundamentals",
+    content: "C programming lúc đầu mình hoàn toàn bó tay, nhưng được hướng dẫn step by step từ cơ bản đến nâng cao. Bây giờ tự tin code C rồi!",
+    rating: 5,
+    semester: "Học kỳ 1"
+  },
+  {
+    name: "Ngô Anh Tuấn",
+    avatar: "NT",
+    subject: "MAD101 - Discrete Mathematics",
+    content: "Toán rời rạc khó hiểu lắm, nhưng được giải thích bằng ví dụ thực tế và có bài tập mẫu chi tiết. Điểm A không còn xa vời!",
+    rating: 5,
+    semester: "Học kỳ 2"
+  },
+  {
+    name: "Lý Văn Đức",
+    avatar: "LD",
+    subject: "OSG202 - Operating Systems",
+    content: "Hệ điều hành phức tạp nhưng team giải thích rất dễ hiểu, có lab thực hành chi tiết. Giờ hiểu Linux command line như pro!",
+    rating: 5,
+    semester: "Học kỳ 2"
+  },
+  {
+    name: "Hoàng Thị Lan",
+    avatar: "HL",
+    subject: "JPD113 - Japanese Elementary",
+    content: "Học tiếng Nhật từ con số 0, được support vocab và grammar hàng ngày. N5 pass với điểm cao, cảm ơn team rất nhiều!",
+    rating: 5,
+    semester: "Học kỳ 3"
+  },
+  {
+    name: "Phan Minh Tâm",
+    avatar: "PT",
+    subject: "SWT301 - Software Testing",
+    content: "Testing các kiểu test case, automation test... team có kinh nghiệm thực tế nên dạy rất hay. Project cuối kì full mark!",
+    rating: 5,
+    semester: "Học kỳ 5"
+  },
+  {
+    name: "Vũ Thị Nga",
+    avatar: "VN",
+    subject: "NWC204 - Computer Networking",
+    content: "Mạng máy tính lý thuyết nhiều, nhưng được hướng dẫn config router, switch thực tế. Hiểu sâu hơn về network protocol!",
+    rating: 5,
+    semester: "Học kỳ 2"
   }
 ];
 

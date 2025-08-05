@@ -25,8 +25,8 @@ const semesterColors = [
 
 export const SubjectsSection = () => {
   const handleSubjectClick = (subject: string) => {
-    // Open Google Docs demo link (using placeholder for now)
-    window.open('https://docs.google.com/document/d/demo', '_blank');
+    // Open Google Docs demo link
+    window.open('https://docs.google.com/document/d/1THKvW20D4o-bPxCyrillclf1R5Z_29Os5EpOX6G--dw/edit?usp=sharing', '_blank');
   };
 
   return (
