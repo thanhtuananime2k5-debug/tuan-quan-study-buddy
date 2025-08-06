@@ -172,6 +172,8 @@ export type Database = {
           in_stock: boolean | null
           name: string
           price: number
+          sold_count: number | null
+          total_available: number | null
           updated_at: string
         }
         Insert: {
@@ -182,6 +184,8 @@ export type Database = {
           in_stock?: boolean | null
           name: string
           price: number
+          sold_count?: number | null
+          total_available?: number | null
           updated_at?: string
         }
         Update: {
@@ -192,6 +196,8 @@ export type Database = {
           in_stock?: boolean | null
           name?: string
           price?: number
+          sold_count?: number | null
+          total_available?: number | null
           updated_at?: string
         }
         Relationships: []

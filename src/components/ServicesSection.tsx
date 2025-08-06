@@ -1,26 +1,36 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { formatPrice, formatNumber } from "@/lib/utils";
 import { 
   BookOpen, 
   Code, 
+  Users, 
+  Zap, 
+  FileText, 
   Video, 
-  GraduationCap, 
-  FileText,
-  Play,
-  Edit,
-  BarChart
+  Award,
+  Lightbulb,
+  Star,
+  MessageSquare,
+  Tv,
+  Palette,
+  Bot,
+  Scissors
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 interface Product {
   id: string;
   name: string;
-  description: string;
+  description: string | null;
   price: number;
   in_stock: boolean;
+  sold_count: number;
+  total_available: number;
 }
 
 export const ServicesSection = () => {
@@ -50,21 +60,23 @@ export const ServicesSection = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND'
-    }).format(price);
-  };
-
   const getServiceIcon = (name: string) => {
-    if (name.toLowerCase().includes('coursera')) return GraduationCap;
-    if (name.toLowerCase().includes('tài liệu') || name.toLowerCase().includes('source')) return FileText;
-    if (name.toLowerCase().includes('khóa học')) return Play;
-    if (name.toLowerCase().includes('project') || name.toLowerCase().includes('java') || name.toLowerCase().includes('python') || name.toLowerCase().includes('web')) return Code;
-    if (name.toLowerCase().includes('edit') || name.toLowerCase().includes('script') || name.toLowerCase().includes('media')) return Video;
-    if (name.toLowerCase().includes('bảng điểm')) return BarChart;
-    return BookOpen;
+    if (name.toLowerCase().includes('mad') || name.toLowerCase().includes('mae') || name.toLowerCase().includes('mas')) return BookOpen;
+    if (name.toLowerCase().includes('pro') || name.toLowerCase().includes('prf')) return Code;
+    if (name.toLowerCase().includes('wed')) return Zap;
+    if (name.toLowerCase().includes('src')) return FileText;
+    if (name.toLowerCase().includes('rush')) return Star;
+    if (name.toLowerCase().includes('edit')) return Video;
+    if (name.toLowerCase().includes('debate')) return MessageSquare;
+    if (name.toLowerCase().includes('kịch bản')) return Lightbulb;
+    if (name.toLowerCase().includes('combo')) return Award;
+    if (name.toLowerCase().includes('transcript')) return FileText;
+    if (name.toLowerCase().includes('quizlet')) return BookOpen;
+    if (name.toLowerCase().includes('chatgpt')) return Bot;
+    if (name.toLowerCase().includes('netflix')) return Tv;
+    if (name.toLowerCase().includes('canva')) return Palette;
+    if (name.toLowerCase().includes('capcut')) return Scissors;
+    return Users;
   };
 
   const handleServiceClick = (product: Product) => {
@@ -86,24 +98,27 @@ export const ServicesSection = () => {
 
   if (loading) {
     return (
-      <section id="services" className="py-20 px-4 bg-background">
+      <section className="py-20 px-4 bg-background" id="services">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Dịch vụ hỗ trợ học tập
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Dịch vụ của chúng mình
             </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Hỗ trợ toàn diện cho sinh viên từ học tập đến kỹ năng mềm
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
               <Card key={i} className="animate-pulse">
                 <CardHeader>
-                  <div className="h-16 w-16 bg-muted rounded-full mx-auto mb-4" />
-                  <div className="h-4 bg-muted rounded w-3/4 mx-auto mb-2" />
-                  <div className="h-3 bg-muted rounded w-full mb-2" />
-                  <div className="h-6 bg-muted rounded w-1/2 mx-auto" />
+                  <Skeleton className="h-16 w-16 rounded-full mx-auto mb-4" />
+                  <Skeleton className="h-4 w-3/4 mx-auto mb-2" />
+                  <Skeleton className="h-3 w-full mb-2" />
+                  <Skeleton className="h-6 w-1/2 mx-auto" />
                 </CardHeader>
                 <CardContent>
-                  <div className="h-10 bg-muted rounded" />
+                  <Skeleton className="h-10 w-full" />
                 </CardContent>
               </Card>
             ))}
@@ -114,60 +129,63 @@ export const ServicesSection = () => {
   }
 
   return (
-    <section id="services" className="py-20 px-4 bg-background">
+    <section className="py-20 px-4 bg-background" id="services">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Dịch vụ hỗ trợ học tập
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Dịch vụ của chúng mình
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Chúng mình cung cấp đầy đủ các dịch vụ từ A đến Z để hỗ trợ bạn thành công trong học tập
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Hỗ trợ toàn diện cho sinh viên từ học tập đến kỹ năng mềm
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => {
-            const IconComponent = getServiceIcon(product.name);
-            return (
-              <Card 
-                key={product.id} 
-                className="group hover:shadow-large transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-soft"
-              >
-                <CardHeader className="text-center">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <IconComponent className="w-8 h-8 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl font-bold">{product.name}</CardTitle>
-                  <CardDescription className="text-sm">
-                    {product.description}
-                  </CardDescription>
-                  <Badge variant="secondary" className="text-lg font-semibold py-1 px-3">
-                    {formatPrice(product.price)}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <Card key={product.id} className="relative group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
+              <CardHeader className="text-center">
+                <div className="flex justify-between items-start mb-4">
+                  <Badge variant="secondary" className="text-xs">
+                    Đã bán: {formatNumber(product.sold_count)}
                   </Badge>
-                </CardHeader>
-                
-                <CardContent className="space-y-4">
-                  <Button 
-                    variant="default" 
-                    className="w-full"
-                    onClick={() => handleServiceClick(product)}
-                  >
-                    Đặt dịch vụ ngay
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
+                  <Badge variant="outline" className="text-xs">
+                    Còn lại: {formatNumber(product.total_available - product.sold_count)}
+                  </Badge>
+                </div>
+                <div className="mx-auto mb-4 p-3 bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
+                  {(() => {
+                    const Icon = getServiceIcon(product.name);
+                    return <Icon className="h-8 w-8 text-primary" />;
+                  })()}
+                </div>
+                <CardTitle className="text-xl font-bold">{product.name}</CardTitle>
+                <CardDescription className="text-base">
+                  {product.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center space-y-4">
+                <div className="text-3xl font-bold text-primary">
+                  {formatPrice(product.price)}
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground font-semibold py-3"
+                  onClick={() => handleServiceClick(product)}
+                >
+                  Đặt hàng ngay
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
         
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4">
+        <div className="text-center mt-16">
+          <p className="text-muted-foreground mb-6">
             ✨ Tất cả dịch vụ đều có cam kết chất lượng và hỗ trợ 24/7
           </p>
           <Button 
-            variant="hero" 
             size="lg"
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"
           >
             Liên hệ tư vấn miễn phí
           </Button>

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Youtube, ArrowRight } from "lucide-react";
-import heroAvatar from "@/assets/hero-avatar.jpg";
+import heroAvatar from "@/assets/anime-coding-hero.jpg";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4 py-20">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4 py-20 pt-24">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Text Content */}
         <div className="text-center lg:text-left space-y-6">

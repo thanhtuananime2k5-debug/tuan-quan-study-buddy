@@ -6,10 +6,12 @@ import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { ChatBubble } from "@/components/ChatBubble";
 import { SeparatorDivider } from "@/components/SeparatorDivider";
+import { Navigation } from "@/components/Navigation";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
       <HeroSection />
       <SeparatorDivider />
       <ServicesSection />
