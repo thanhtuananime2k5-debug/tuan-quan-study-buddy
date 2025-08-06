@@ -49,6 +49,10 @@ All colors MUST be HSL.
     --shadow-medium: 0 10px 15px -3px hsl(214 84% 56% / 0.1);
     --shadow-large: 0 25px 50px -12px hsl(214 84% 56% / 0.25);
     
+    /* Separators and dividers */
+    --separator: linear-gradient(90deg, transparent, hsl(214 84% 56% / 0.3), transparent);
+    --separator-light: linear-gradient(90deg, transparent, hsl(214 84% 56% / 0.1), transparent);
+    
     /* Animation */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -117,5 +121,22 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Separator styles */
+@layer components {
+  .separator-gradient {
+    background: var(--separator);
+    height: 1px;
+    width: 100%;
+    border: none;
+  }
+  
+  .separator-light {
+    background: var(--separator-light);
+    height: 1px;
+    width: 100%;
+    border: none;
   }
 }

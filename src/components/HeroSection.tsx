@@ -4,8 +4,8 @@ import heroAvatar from "@/assets/hero-avatar.jpg";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4 py-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Text Content */}
         <div className="text-center lg:text-left space-y-6">
           <div className="space-y-4">
@@ -55,7 +55,7 @@ export const HeroSection = () => {
             <img 
               src={heroAvatar} 
               alt="Tuấn & Quân - Study Buddy Avatar"
-              className="w-full max-w-lg rounded-2xl shadow-large transform hover:scale-105 transition-transform duration-300"
+              className="w-full max-w-2xl lg:max-w-xl rounded-2xl shadow-large transform hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute -top-4 -right-4 bg-secondary text-secondary-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-medium animate-bounce">
               ✨ Đáng tin cậy

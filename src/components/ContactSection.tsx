@@ -215,6 +215,15 @@ export const ContactSection = () => {
                   <Youtube className="w-5 h-5 mr-3 text-red-600" />
                   YouTube: @tuanvaquanfptu
                 </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => window.open('tel:0375020190', '_self')}
+                >
+                  <Phone className="w-5 h-5 mr-3 text-green-600" />
+                  Zalo: 0375020190
+                </Button>
               </CardContent>
             </Card>
             
