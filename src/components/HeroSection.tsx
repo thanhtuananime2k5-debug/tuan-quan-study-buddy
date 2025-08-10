@@ -4,20 +4,20 @@ import heroAvatar from "@/assets/anime-coding-hero.jpg";
 
 export const HeroSection = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4 py-20 pt-24">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4 py-12 pt-20 lg:py-20 lg:pt-24">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         {/* Text Content */}
         <div className="text-center lg:text-left space-y-6">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-tight">
               Tuấn & Quân
             </h1>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Việc gì khó có Tuấn và Quân lo
             </h2>
           </div>
           
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
             🎓 Hỗ trợ sinh viên đại học trong học tập, ôn thi và kỹ năng mềm – từ A đến Z, 
             tuyệt đối nói không với gian lận!
           </p>
@@ -55,7 +55,7 @@ export const HeroSection = () => {
             <img 
               src={heroAvatar} 
               alt="Tuấn & Quân - Study Buddy Avatar"
-              className="w-full max-w-2xl lg:max-w-xl rounded-2xl shadow-large transform hover:scale-105 transition-transform duration-300"
+              className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-large transform hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute -top-4 -right-4 bg-secondary text-secondary-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-medium animate-bounce">
               ✨ Đáng tin cậy

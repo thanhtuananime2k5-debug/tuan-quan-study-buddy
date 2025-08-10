@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import qrPayment from "@/assets/qr-payment.jpg";
+// Using the new QR image uploaded by user
 
 interface QRPaymentModalProps {
   isOpen: boolean;
@@ -19,8 +19,8 @@ export const QRPaymentModal = ({ isOpen, onClose }: QRPaymentModalProps) => {
         <div className="flex flex-col items-center gap-4 p-4">
           <div className="relative">
             <img 
-              src={qrPayment} 
-              alt="QR Payment - Cao Thanh Tuấn" 
+              src="/lovable-uploads/fb5c1ae5-9f8c-4b74-80ec-a1c1644496f2.png" 
+              alt="QR Payment - Cao Thanh Tuấn BIDV" 
               className="w-80 h-auto rounded-lg shadow-lg"
             />
           </div>
