@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const testimonials = [
   {
@@ -102,6 +104,29 @@ const testimonials = [
 ];
 
 export const TestimonialsSection = () => {
+  const [reviews, setReviews] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('approved', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setReviews(data || []);
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+  };
+
+  const allTestimonials = [...reviews, ...testimonials];
+
   return (
     <section id="testimonials" className="py-20 px-4 bg-background">
       <div className="max-w-7xl mx-auto">
@@ -115,7 +140,7 @@ export const TestimonialsSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {allTestimonials.map((testimonial, index) => (
             <Card 
               key={index} 
               className="group hover:shadow-large transition-all duration-300 transform hover:-translate-y-1 border-0 shadow-soft"

@@ -71,6 +71,134 @@ export type Database = {
         }
         Relationships: []
       }
+      forum_posts: {
+        Row: {
+          author_email: string | null
+          author_name: string
+          category: string
+          content: string
+          created_at: string
+          id: string
+          is_sticky: boolean | null
+          likes: number | null
+          status: string | null
+          title: string
+          updated_at: string
+          views: number | null
+        }
+        Insert: {
+          author_email?: string | null
+          author_name: string
+          category: string
+          content: string
+          created_at?: string
+          id?: string
+          is_sticky?: boolean | null
+          likes?: number | null
+          status?: string | null
+          title: string
+          updated_at?: string
+          views?: number | null
+        }
+        Update: {
+          author_email?: string | null
+          author_name?: string
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_sticky?: boolean | null
+          likes?: number | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+          views?: number | null
+        }
+        Relationships: []
+      }
+      forum_replies: {
+        Row: {
+          author_email: string | null
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          is_solution: boolean | null
+          likes: number | null
+          post_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          author_email?: string | null
+          author_name: string
+          content: string
+          created_at?: string
+          id?: string
+          is_solution?: boolean | null
+          likes?: number | null
+          post_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          author_email?: string | null
+          author_name?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_solution?: boolean | null
+          likes?: number | null
+          post_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      news_posts: {
+        Row: {
+          author: string
+          category: string
+          content: string | null
+          created_at: string
+          description: string
+          featured: boolean | null
+          id: string
+          published: boolean | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          category: string
+          content?: string | null
+          created_at?: string
+          description: string
+          featured?: boolean | null
+          id?: string
+          published?: boolean | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string | null
+          created_at?: string
+          description?: string
+          featured?: boolean | null
+          id?: string
+          published?: boolean | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -199,6 +327,42 @@ export type Database = {
           sold_count?: number | null
           total_available?: number | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          approved: boolean | null
+          content: string
+          created_at: string
+          customer_email: string | null
+          customer_name: string
+          id: string
+          rating: number
+          semester: string | null
+          subject: string
+        }
+        Insert: {
+          approved?: boolean | null
+          content: string
+          created_at?: string
+          customer_email?: string | null
+          customer_name: string
+          id?: string
+          rating: number
+          semester?: string | null
+          subject: string
+        }
+        Update: {
+          approved?: boolean | null
+          content?: string
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string
+          id?: string
+          rating?: number
+          semester?: string | null
+          subject?: string
         }
         Relationships: []
       }

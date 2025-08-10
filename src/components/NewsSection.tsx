@@ -1,10 +1,34 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const NewsSection = () => {
-  const news = [
+  const [news, setNews] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  const fetchNews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('news_posts')
+        .select('*')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setNews(data || staticNews);
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      setNews(staticNews);
+    }
+  };
+
+  const staticNews = [
     {
       id: 1,
       title: "Cập nhật tài liệu mới cho kỳ Spring 2024",

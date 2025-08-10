@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import { 
   MessageSquare, 
   ThumbsUp, 
@@ -20,8 +22,74 @@ import {
 export const ForumSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showNewQuestion, setShowNewQuestion] = useState(false);
+  const [forumPosts, setForumPosts] = useState<any[]>([]);
+  const [newQuestion, setNewQuestion] = useState({ title: "", content: "", author_name: "", author_email: "", category: "MAD101" });
+  const { toast } = useToast();
 
-  const forumPosts = [
+  useEffect(() => {
+    fetchForumPosts();
+  }, []);
+
+  const fetchForumPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('forum_posts')
+        .select(`
+          *,
+          forum_replies(count)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setForumPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching forum posts:', error);
+    }
+  };
+
+  const handleSubmitQuestion = async () => {
+    if (!newQuestion.title || !newQuestion.content || !newQuestion.author_name) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng điền đầy đủ thông tin",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('forum_posts')
+        .insert([newQuestion]);
+
+      if (error) throw error;
+
+      // Send notification email
+      await supabase.functions.invoke('send-notification', {
+        body: {
+          type: 'forum_post',
+          data: newQuestion
+        }
+      });
+
+      toast({
+        title: "Thành công",
+        description: "Câu hỏi đã được đăng thành công!"
+      });
+
+      setNewQuestion({ title: "", content: "", author_name: "", author_email: "", category: "MAD101" });
+      setShowNewQuestion(false);
+      fetchForumPosts();
+    } catch (error) {
+      toast({
+        title: "Lỗi",
+        description: "Có lỗi xảy ra khi đăng câu hỏi",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const staticPosts = [
     {
       id: 1,
       title: "Làm thế nào để học hiệu quả môn MAD101?",
@@ -190,13 +258,29 @@ export const ForumSection = () => {
                   <CardTitle className="text-lg">Đặt câu hỏi mới</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Input placeholder="Tiêu đề câu hỏi..." />
+                  <Input 
+                    placeholder="Tên của bạn..." 
+                    value={newQuestion.author_name}
+                    onChange={(e) => setNewQuestion({...newQuestion, author_name: e.target.value})}
+                  />
+                  <Input 
+                    placeholder="Email (tùy chọn)..." 
+                    value={newQuestion.author_email}
+                    onChange={(e) => setNewQuestion({...newQuestion, author_email: e.target.value})}
+                  />
+                  <Input 
+                    placeholder="Tiêu đề câu hỏi..." 
+                    value={newQuestion.title}
+                    onChange={(e) => setNewQuestion({...newQuestion, title: e.target.value})}
+                  />
                   <Textarea 
                     placeholder="Mô tả chi tiết câu hỏi của bạn..."
                     rows={4}
+                    value={newQuestion.content}
+                    onChange={(e) => setNewQuestion({...newQuestion, content: e.target.value})}
                   />
                   <div className="flex gap-2">
-                    <Button size="sm">Đăng câu hỏi</Button>
+                    <Button size="sm" onClick={handleSubmitQuestion}>Đăng câu hỏi</Button>
                     <Button 
                       variant="outline" 
                       size="sm"
@@ -210,7 +294,7 @@ export const ForumSection = () => {
             )}
 
             {/* Forum Posts */}
-            {forumPosts.map((post) => (
+            {[...forumPosts, ...staticPosts].map((post) => (
               <Card key={post.id} className="hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">

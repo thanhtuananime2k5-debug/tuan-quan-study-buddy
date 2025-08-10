@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Home, GraduationCap, MessageCircle, Play, Heart, Youtube, Facebook, Phone, Mail } from "lucide-react";
 import { QRPaymentModal } from "./QRPaymentModal";
+import avatarImage from "@/assets/anime-avatar.jpg";
 
 export const Navigation = () => {
   const [showQR, setShowQR] = useState(false);
@@ -88,16 +89,21 @@ export const Navigation = () => {
           </div>
           
           <div className="hidden md:flex items-center gap-6">
-            {navigationItems.map((item, index) => (
-              <Button
-                key={index}
-                variant="ghost"
-                onClick={item.action}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                {item.label}
-              </Button>
-            ))}
+            <Button variant="ghost" onClick={() => scrollToSection('hero')} className="text-muted-foreground hover:text-foreground">
+              Trang chủ
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('services')} className="text-muted-foreground hover:text-foreground">
+              Khóa học
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('forum')} className="text-muted-foreground hover:text-foreground">
+              Diễn đàn
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('testimonials')} className="text-muted-foreground hover:text-foreground">
+              Đánh giá
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('news')} className="text-muted-foreground hover:text-foreground">
+              Tin tức
+            </Button>
             <Button
               onClick={() => setShowQR(true)}
               variant="outline"

@@ -10,11 +10,13 @@ import { Footer } from "@/components/Footer";
 import { ChatBubble } from "@/components/ChatBubble";
 import { SeparatorDivider } from "@/components/SeparatorDivider";
 import { Navigation } from "@/components/Navigation";
+import { SidebarNavigation } from "@/components/SidebarNavigation";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <SidebarNavigation />
       <HeroSection />
       <SeparatorDivider />
       <ServicesSection />
