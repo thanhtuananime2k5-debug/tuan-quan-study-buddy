@@ -15,62 +15,45 @@ export const HeroSection = () => {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-        {/* Text Content */}
-        <div className="text-center lg:text-left space-y-6">
-          <div className="space-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
-              Tuấn & Quân
-            </h1>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
-              Việc gì khó có Tuấn và Quân lo
-            </h2>
-          </div>
-          
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 max-w-2xl mx-auto lg:mx-0">
-            🎓 Hỗ trợ sinh viên đại học trong học tập, ôn thi và kỹ năng mềm – từ A đến Z, 
-            tuyệt đối nói không với gian lận!
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button 
-              variant="green" 
-              size="hero"
-              className="group"
-              onClick={() => window.scrollTo({ top: document.getElementById('services')?.offsetTop, behavior: 'smooth' })}
-            >
-              Đặt dịch vụ ngay
-              <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="hero"
-              onClick={() => window.open('https://www.youtube.com/@tuanvaquanfptu', '_blank')}
-              className="group"
-            >
-              <Youtube className="mr-2" />
-              Tham gia ngay
-            </Button>
-          </div>
-          
-          <div className="flex items-center justify-center lg:justify-start gap-2 text-sm text-gray-300">
-            <span>🏆 Cộng đồng học lập trình 1000+ thành viên</span>
-          </div>
+      <div className="max-w-5xl mx-auto text-center space-y-8">
+        <div className="space-y-6">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white leading-tight animate-fade-in">
+            Tuấn & Quân
+          </h1>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent animate-fade-in">
+            Việc gì khó có Tuấn và Quân lo
+          </h2>
         </div>
         
-        {/* Hero Image */}
-        <div className="flex justify-center lg:justify-end">
-          <div className="relative">
-            <img 
-              src={heroAvatar} 
-              alt="Tuấn & Quân - Study Buddy Avatar"
-              className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-large transform hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute -top-4 -right-4 bg-secondary text-secondary-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-medium animate-bounce">
-              ✨ Đáng tin cậy
-            </div>
-          </div>
+        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-200 max-w-4xl mx-auto animate-fade-in">
+          🎓 Hỗ trợ sinh viên đại học trong học tập, ôn thi và kỹ năng mềm – từ A đến Z, 
+          tuyệt đối nói không với gian lận!
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in">
+          <Button 
+            variant="green" 
+            size="hero"
+            className="group text-xl px-8 py-4"
+            onClick={() => window.scrollTo({ top: document.getElementById('services')?.offsetTop, behavior: 'smooth' })}
+          >
+            Đặt dịch vụ ngay
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            size="hero"
+            onClick={() => window.open('https://www.youtube.com/@tuanvaquanfptu', '_blank')}
+            className="group text-xl px-8 py-4 border-white text-white hover:bg-white hover:text-black"
+          >
+            <Youtube className="mr-2" />
+            Tham gia ngay
+          </Button>
+        </div>
+        
+        <div className="flex items-center justify-center gap-2 text-lg text-gray-300 animate-fade-in">
+          <span>🏆 Cộng đồng học lập trình 1000+ thành viên</span>
         </div>
       </div>
     </section>
