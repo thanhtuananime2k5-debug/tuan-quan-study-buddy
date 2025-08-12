@@ -243,7 +243,7 @@ export const ContactSection = () => {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <img 
-                      src={qrPayment} 
+                      src="/lovable-uploads/144e9be9-c110-4cd2-9fe8-119e115c8789.png" 
                       alt="QR Code Payment"
                       className="w-48 h-48 mx-auto rounded-lg shadow-medium"
                     />

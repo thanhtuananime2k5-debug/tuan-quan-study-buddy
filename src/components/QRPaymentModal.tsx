@@ -19,7 +19,7 @@ export const QRPaymentModal = ({ isOpen, onClose }: QRPaymentModalProps) => {
         <div className="flex flex-col items-center gap-4 p-4">
           <div className="relative">
             <img 
-              src="/lovable-uploads/fb5c1ae5-9f8c-4b74-80ec-a1c1644496f2.png" 
+              src="/lovable-uploads/144e9be9-c110-4cd2-9fe8-119e115c8789.png" 
               alt="QR Payment - Cao Thanh Tuấn BIDV" 
               className="w-80 h-auto rounded-lg shadow-lg"
             />
