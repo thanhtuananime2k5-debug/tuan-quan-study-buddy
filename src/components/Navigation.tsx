@@ -88,34 +88,30 @@ export const Navigation = () => {
             </h1>
           </div>
           
-          <div className="hidden md:flex items-center w-full justify-between">
-            <div className="flex items-center gap-6">
-              <Button variant="ghost" onClick={() => scrollToSection('hero')} className="text-muted-foreground hover:text-foreground">
-                Trang chủ
-              </Button>
-              <Button variant="ghost" onClick={() => scrollToSection('services')} className="text-muted-foreground hover:text-foreground">
-                Khóa học
-              </Button>
-              <Button variant="ghost" onClick={() => scrollToSection('forum')} className="text-muted-foreground hover:text-foreground">
-                Diễn đàn
-              </Button>
-            </div>
-            <div className="flex items-center gap-6">
-              <Button variant="ghost" onClick={() => scrollToSection('testimonials')} className="text-muted-foreground hover:text-foreground">
-                Đánh giá
-              </Button>
-              <Button variant="ghost" onClick={() => scrollToSection('news')} className="text-muted-foreground hover:text-foreground">
-                Tin tức
-              </Button>
-              <Button
-                onClick={() => setShowQR(true)}
-                variant="outline"
-                className="border-pink-500 text-pink-500 hover:bg-pink-50"
-              >
-                <Heart className="h-4 w-4 mr-2" />
-                Ủng hộ
-              </Button>
-            </div>
+          <div className="hidden md:flex items-center gap-6 ml-auto">
+            <Button variant="ghost" onClick={() => scrollToSection('hero')} className="text-muted-foreground hover:text-foreground">
+              Trang chủ
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('services')} className="text-muted-foreground hover:text-foreground">
+              Khóa học
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('forum')} className="text-muted-foreground hover:text-foreground">
+              Diễn đàn
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('testimonials')} className="text-muted-foreground hover:text-foreground">
+              Đánh giá
+            </Button>
+            <Button variant="ghost" onClick={() => scrollToSection('news')} className="text-muted-foreground hover:text-foreground">
+              Tin tức
+            </Button>
+            <Button
+              onClick={() => setShowQR(true)}
+              variant="outline"
+              className="border-pink-500 text-pink-500 hover:bg-pink-50"
+            >
+              <Heart className="h-4 w-4 mr-2" />
+              Ủng hộ
+            </Button>
           </div>
         </div>
       </nav>
