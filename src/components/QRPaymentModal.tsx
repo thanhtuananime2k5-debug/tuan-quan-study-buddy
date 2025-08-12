@@ -21,7 +21,7 @@ export const QRPaymentModal = ({ isOpen, onClose }: QRPaymentModalProps) => {
             <img 
               src="/lovable-uploads/144e9be9-c110-4cd2-9fe8-119e115c8789.png" 
               alt="QR Payment - Cao Thanh Tuấn BIDV" 
-              className="w-80 h-auto rounded-lg shadow-lg"
+              className="w-72 h-auto aspect-[9/16] object-cover rounded-lg shadow-lg"
             />
           </div>
           
