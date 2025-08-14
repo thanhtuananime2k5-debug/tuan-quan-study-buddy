@@ -73,6 +73,19 @@ export const ContactSection = () => {
 
       if (error) throw error;
 
+      // Send notification email
+      await supabase.functions.invoke('send-notification', {
+        body: {
+          type: 'contact_request',
+          data: {
+            full_name: formData.name,
+            email: formData.email,
+            service: formData.service,
+            message: formData.message
+          }
+        }
+      });
+
       setShowPayment(true);
       toast({
         title: "Gửi yêu cầu thành công!",
